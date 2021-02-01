@@ -5,6 +5,7 @@
   "main": "src/index",
   "scripts": {
     "test": "jest",
+    "coverage": "jest --coverage",
     "start": "webpack-dev-server"
   },
   "keywords": [
