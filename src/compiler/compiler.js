@@ -204,7 +204,19 @@ export function transformer(ast) {
             }
         },
         "CallExpression":{
-            
+            enter:(node, parent)=>{
+                let expression = {
+                    type:"CallExpression",
+                    callee:{
+                        type:"Identifier",
+                        value:node.value
+                    },
+                    arguments:[]
+                }
+
+                node._context = expression.arguments
+                
+            }
         }
     })
 
