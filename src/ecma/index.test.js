@@ -1,5 +1,5 @@
-import { $call, $apply, $bind } from './this.js'
-import { $new } from './new'
+import { $call, $apply, $bind } from '../this.js'
+import { $new } from '../new'
 import { debounce } from './debounce'
 let logInfo = ''
 
@@ -88,9 +88,9 @@ describe('test debounce', () => {
     it('the function should be run 100 times', () => {
         let i = 1
         function getCount() {
-          i++
+            i++
         }
-      
+
         for (let i = 1; i < 100; i++) {
             getCount()
         }
@@ -99,14 +99,28 @@ describe('test debounce', () => {
     it('the function should be run once when load more times', () => {
         let i = 1
         function getCount(i) {
-          i++
+            i++
         }
         const test = debounce(getCount, 1000)
         for (let i = 0; i < 1000; i++) {
             test()
         }
-        setTimeout(()=>{
+        setTimeout(() => {
             expect(i).toBe(2)
+        }, 1000)
+    })
+    it('the function shoule be executed immediate when the first it is executed', () => {
+        let i = 1
+        function getCount() {
+            i++
+        }
+        const test = debounce(getCount, 1000, true)
+        test()
+        expect(i).toBe(2)
+        test()
+        expect(i).toBe(2)
+        setTimeout(()=>{
+            expect(i).toBe(3)
         },1000)
     })
 })
