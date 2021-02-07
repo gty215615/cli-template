@@ -7,7 +7,8 @@ type WatchFC = (newdata?: any, olddata?: any) => void
 interface IWatcherOptions {
     lazy?: boolean;
     watch?: boolean;
-    watchFC?: WatchFC
+    watchFC?: WatchFC;
+    vm?:any
 }
 
 export default class Watcher {
@@ -18,12 +19,14 @@ export default class Watcher {
     watchFC?: WatchFC;
     dirty?: boolean;
     dep?: Dep;
-    constructor(update: TWatcherUpdateFC, options?: IWatcherOptions) {
-        this.updateFC = update
+    vm: any;
+    constructor(update: TWatcherUpdateFC, options?: IWatcherOptions,vm:any) {
+        this.updateFC = update.bind(vm)
         this.lazy = options?.lazy;
         this.dirty = options?.lazy;
         this.watch = options?.watch;
         this.watchFC = options?.watchFC;
+        this.vm =vm;
         if (this.lazy) {
             this.dep = new Dep();
         } else {

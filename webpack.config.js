@@ -15,6 +15,10 @@ module.exports = {
         contentBase:'.',
         port:3000
     },
+    resolve: {
+        // Add `.ts` and `.tsx` as a resolvable extension.
+        extensions: [".ts", ".tsx", ".js"]
+      },
     module: {
         rules: [
             {
