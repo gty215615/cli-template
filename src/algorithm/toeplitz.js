@@ -12,7 +12,7 @@ var isToeplitzMatrix = function (matrix) {
     for (let i = 0; i < m - 1; i++) {
         let n = matrix[i].length
         for (let j = 0; j < n - 1; j++) {
-      
+
             if (matrix[i][j] !== matrix[i + 1][j + 1] && matrix[i + 1][j + 1] !== undefined) {
                 return false
             }
@@ -23,6 +23,34 @@ var isToeplitzMatrix = function (matrix) {
     return true
 };
 
-let matrix = [[1,2],[2,2]]
+let matrix = [[1, 2], [2, 2]]
 
 console.log(isToeplitzMatrix(matrix));
+
+// What if the matrix is stored on disk, and the memory is limited such that you can only load at most one row of the matrix into the memory at once?
+// What if the matrix is so large that you can only load up a partial row into the memory at once?
+
+
+var isToeplitzMatrix1 = function (matrix) {
+    let m = matrix.length;
+    //  memory only load one row of the matrix at once
+    let tempArr = [];
+
+    for (let i = 1; i < m; i++) {
+        tempArr = matrix[i - 1];
+        let n = tempArr.length;
+        for (let j = 0; j < n; j++) {
+            console.log();
+            if (matrix[i][j + 1] && tempArr[j] !== matrix[i][j + 1]){
+                return false
+            }
+        }
+    }
+
+    return true
+};
+
+let matrix1 =[[36,86,7,94,71,59,10],[19,0,86,7,94,71,59]]
+
+console.log(isToeplitzMatrix1(matrix1));
+
