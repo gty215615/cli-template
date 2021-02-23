@@ -1,19 +1,19 @@
 
-function $new(target) {
-    //  new 关键字的作用
-    const args = [].slice.call(arguments, 1)
-    //  1. 创建一个空对象
-    const obj = Object.create(target.prototype);
-    //  2. 将对象的原型链接到目标对象上
-
-    //  3. 执行目标函数
-    let result = target.apply(obj, args)
-    //  4. 若目标函数返回的为对象，则将该对象返回，否则将返回创建的对象
-    result =  (result && typeof result === 'object') ? result : obj;
-
-    return result
+function $new() {
+    // 模拟new 用法 $new(Constructor,params...)
+    // 获取构造函数
+    const contr = arguments[0]
+    //  获取参数
+    const args = Array.prototype.slice.call(arguments, 1)
+    // 创建一个空对象
+    const obj = Object.create(null)
+    //  链接空对象到构造函数的原型
+    obj.__proto__ = contr.prototype;
+    //  用空对象调用构造函数
+    const result = contr.apply(obj, args)
+    //  返回值为object 则返回这个结果，否则返回创建的对象
+    return typeof result === 'object' ? result : obj
 }
-
 
 function Person(name, sex) {
     this.name = name

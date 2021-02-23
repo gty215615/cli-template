@@ -40,8 +40,7 @@ var isToeplitzMatrix1 = function (matrix) {
         tempArr = matrix[i - 1];
         let n = tempArr.length;
         for (let j = 0; j < n; j++) {
-            console.log();
-            if (matrix[i][j + 1] && tempArr[j] !== matrix[i][j + 1]){
+            if (matrix[i][j + 1]!== undefined && tempArr[j] !== matrix[i][j + 1]){
                 return false
             }
         }
