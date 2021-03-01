@@ -11,20 +11,28 @@ function $promise(exector) {
     //  拒绝的原因 ，当promise 被拒绝时会传递给回调的值
     this.reason = undefined;
     this.resolveCallback = [];
-    this.rejectCallback = []
+    this.rejectCallback = [];
+    const _this = this;
+
     function resolve(value) {
-        this.value = value
-        this.status = FULFILLED;
-        this.resolveCallback.forEach(cb => {
-            cb(this.value)
-        });
+
+        if (_this.status == PENDING) {
+            _this.value = value
+            _this.status = FULFILLED;
+            _this.resolveCallback.forEach(cb => {
+                cb(_this.value)
+            });
+        }
     }
     function reject(reason) {
-        this.reason = reason
-        this.status = REJECTED;
-        this.rejectCallback.forEach(cb => {
-            cb(this.reason)
-        });
+        if (_this.status == PENDING) {
+            _this.reason = reason
+            _this.status = REJECTED;
+            _this.rejectCallback.forEach(cb => {
+                cb(_this.reason)
+            });
+        }
+
     }
     try {
         exector(resolve, reject)
@@ -40,8 +48,8 @@ $promise.prototype.then = function (onFulfilled, onRejected) {
     const _this = this;
     let promise2
     if (_this.status === PENDING) {
-        promise2 = new $promise((resolve, reject) => {
-            _this.resolveCallback.push((value) => {
+        promise2 = new $promise(function (resolve, reject) {
+            _this.resolveCallback.push(function(value) {
                 try {
                     const x = fulfilledCb(value)
                     if (x === promise2) {
@@ -55,7 +63,7 @@ $promise.prototype.then = function (onFulfilled, onRejected) {
                     reject(e)
                 }
             })
-            _this.rejectCallback.push((reason) => {
+            _this.rejectCallback.push(function(reason) {
                 try {
                     const x = rejectedCb(reason)
                     if (x === promise2) {
@@ -71,10 +79,10 @@ $promise.prototype.then = function (onFulfilled, onRejected) {
             })
         })
     } else if (_this.status === FULFILLED) {
-        promise2 = new $promise((resolve, reject) => {
-            _this.resolveCallback.push((value) => {
+        promise2 = new $promise(function(resolve, reject) {
+            _this.resolveCallback.push(function(value) {
                 try {
-                    const x = fulfilledCb(value)
+                    const x = fulfilledCb(_this.value)
                     if (x === promise2) {
                         throw new Error('TypeError')
                     }
@@ -88,8 +96,8 @@ $promise.prototype.then = function (onFulfilled, onRejected) {
             })
         })
     } else if (_this.status === REJECTED) {
-        promise2 = new $promise((resolve, reject) => {
-            _this.rejectCallback.push((reason) => {
+        promise2 = new $promise(function(resolve, reject)  {
+            _this.rejectCallback.push(function(reason) {
                 try {
                     const x = rejectedCb(reason)
                     if (x === promise2) {
@@ -110,3 +118,14 @@ $promise.prototype.then = function (onFulfilled, onRejected) {
 
 
 }
+
+
+new $promise(function (resolve,reject) {
+    resolve(1)
+}).then(res => {
+    console.log('=======1=======');
+    console.log(res);
+}).then(res => {
+    console.log('=======2=======');
+    console.log(res);
+})
