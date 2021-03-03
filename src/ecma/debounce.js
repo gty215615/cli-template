@@ -1,3 +1,10 @@
+/**
+ * 防抖 ： 函数延迟执行，在延迟期间如果有再次触发函数执行的操作，则会导致延迟的时间重新计时
+ * @param {*} fn 
+ * @param {*} wait 
+ * @param {*} immediate 
+ */
+
 function debounce(fn, wait, immediate) {
     let timer = 0
     debounce.cancel=function() {
@@ -25,10 +32,17 @@ function debounce(fn, wait, immediate) {
                 fn.apply(context, args)
             }, wait)
         }
-
-    
-
     }
+    
+}
+
+/**
+ * 节流： 函数在一段时间内仅仅执行一次，在此期间后续触发将会忽视
+ * @param {*} fn 
+ * @param {*} wait 
+ */
+
+function throttle(fn,wait) {
     
 }
 
