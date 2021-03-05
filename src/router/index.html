@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>web router</title>
+    <title>web hash router</title>
 </head>
+
 <body>
-    
+    <button id="login">login</button>
+    <button id="register">register</button>
+    <div id="hash-value"></div>
+
 </body>
+<script>
+    const login = document.getElementById('login')
+    const register = document.getElementById('register')
+    const hashValue = document.getElementById('hash-value')
+    login.addEventListener('click', () => {
+        window.location.hash = '#login'
+    })
+    register.addEventListener('click', () => {
+        window.location.hash = '#register'
+    })
+    window.addEventListener('hashchange', () => {
+        console.log('hash changed!');
+        console.log(window.location.hash);
+        hashValue.innerText = window.location.hash
+    })
+</script>
+
 </html>
