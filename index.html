@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=htmlWebpackPlugin.options.title %></title>
-</head>
-<body>
-    <h1>111</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .outer{
+            width: 400px;
+        }
+        .inner{
+            width: 400px;
+            height: 0;
+            background-color: #000;
+            position: relative;
+            padding-bottom: 50%;
+        }
+        .box{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: red;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="outer">
+      <div class="inner">
+        <div class="box">hello</div>
+      </div>
+    </div>
+  </body>
 </html>
