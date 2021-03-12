@@ -43,7 +43,17 @@ function debounce(fn, wait, immediate) {
  */
 
 function throttle(fn,wait) {
-    
+    let timer = null;
+    return function () {
+        if(timer){
+            return false
+        }
+        fn.apply(this,arguments)
+        timer = setTimeout(()=>{
+            clearTimeout(timer)
+            timer = null   
+        },wait)
+    }
 }
 
 

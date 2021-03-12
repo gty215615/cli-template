@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<style>
+    .pass {
+        color: green;
+    }
+
+    .fail {
+        color: red;
+    }
+</style>
+
+<body>
+    <ul id="result">
+
+    </ul>
+</body>
+<script>
+    var result
+    function assert(value, desc) {
+        const li = document.createElement('li');
+        li.className = value ? 'pass' : 'fail';
+        li.appendChild(document.createTextNode(desc))
+        result.appendChild(li)
+        if( !value ){
+            li.parentNode.parentNode.className = 'fail'
+        }
+        return li
+    }
+    function test(name, fn) {
+        result = document.getElementById('result');
+        result = assert(true, name).appendChild(document.createElement('ul'))
+        fn()
+    }
+    test('A test',function () {
+        assert(true,'first')
+        assert(true,'first')
+        assert(false,'second')
+    })
+    test('B test',function () {
+        assert(false,'first')
+        assert(true,'first')
+        assert(false,'second')
+    })
+</script>
+
+</html>

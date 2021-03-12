@@ -20,6 +20,9 @@ class MyPromise {
         }
     }
     resolve(value) {
+        if( value instanceof MyPromise ){
+            
+        }
         if (this.status === 'pending') {
             this.value = value;
             this.status = 'fulfilled',
@@ -183,3 +186,31 @@ MyPromise.race = function (promises) {
     })
 }
 
+MyPromise.any = function(promises){
+    let rejectCount = 0
+    let rejectArray = []
+    return new MyPromise((resolve,reject)=>{
+        for (let i = 0; i < promises.length; i++) {
+            MyPromise.reslove(promises[i]).then(value=>{
+                resolve(value)
+            },(reason)=>{
+                rejectCount++
+                rejectArray.push(reason)
+                if( rejectCount == promises.length ){
+                    reject(rejectArray)
+                }
+            })
+            
+        }
+    })
+}
+
+let promise2 = new MyPromise((reslove,reject) => {
+    reject('new error!')
+}).then(() => {
+   return 12
+}).then().then(res=>{
+    console.log(res);
+}).catch(err=>{
+    console.log(err);
+})
